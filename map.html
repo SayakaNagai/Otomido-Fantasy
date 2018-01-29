@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Canvas tutorial template</title>
+    <script type="text/javascript">
+      
+      var stage = [
+      [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0 ],
+      [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 0 ],
+      [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 0 ],
+      [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 0 ],
+      [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 ],
+      [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 ],
+      [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 ],
+      [ 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 ],
+      [ 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+      [ 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 ],
+      [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 ],
+      [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 ],
+      [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 ],
+      [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 ],
+      [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+      ];    
+      
+      var nstage_x = 15;
+      var nstage_y = 20;
+      var chara_x = 320;
+      var chara_y = 450;
+      var interval = 32;
+      var chara_x = 3;
+      var chara_y = 13;
+      var chara_size = 32;
+      
+      function init(){
+      var canvas = document.getElementById('canvas');
+      if (canvas.getContext){
+      ctx = canvas.getContext('2d');
+      for( var i = 0; i < nstage_y; i++ ){
+	for( var j = 0; j < nstage_x; j++ ){
+          if( stage[j][i] == 0 ) ctx.fillStyle = 'rgb(71, 131, 40)';
+	  else if( stage[j][i] == 1 || stage[j][i] == 4) ctx.fillStyle = 'rgb(154, 76, 44)';
+	  else if( stage[j][i] == 2 ) ctx.fillStyle = 'rgb(0, 76, 44)';
+	  else if( stage[j][i] == 3 ) ctx.fillStyle = 'rgb(255, 246, 71)';
+	  ctx.fillRect( i*interval, j*interval, interval, interval);	      
+        } 
+      }
+			    
+      ctx.fillStyle = 'rgb(255, 0, 0)';
+      ctx.fillRect( chara_x*interval, chara_y*interval, interval, interval);	    
+}
+      //setInterval(update, 33); //function, 33ms
+      }
+
+      
+      
+      function update(){
+      canvas.width = canvas.width;  //画面更新の裏技
+      }
+      
+    </script>
+    <style type="text/css">
+      canvas { border: 1px solid #000; }
+    </style>
+  </head>
+  <body onload="init()">
+    <canvas id="canvas" width="640" height="480"></canvas>
+  </body>
+</html>
