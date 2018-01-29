@@ -31,6 +31,27 @@
       var chara_x = 3;
       var chara_y = 13;
       var chara_size = 32;
+
+      document.onkeydown = keydown;
+
+      function keydown() {
+      if(event.keyCode == 38){ 
+      chara_y--; 
+      }
+      if(event.keyCode == 40){ 
+      chara_y++; 
+      }
+      if(event.keyCode == 39){ 
+      chara_x++; 
+      }
+      if(event.keyCode == 37){
+      chara_x--;
+      }
+
+      ctx.fillStyle = 'rgb(255, 0, 0)';
+      ctx.fillRect( chara_x*interval, chara_y*interval, interval, interval);
+
+      }
       
       function init(){
       var canvas = document.getElementById('canvas');
@@ -42,7 +63,7 @@
 	  else if( stage[j][i] == 1 || stage[j][i] == 4) ctx.fillStyle = 'rgb(154, 76, 44)';
 	  else if( stage[j][i] == 2 ) ctx.fillStyle = 'rgb(0, 76, 44)';
 	  else if( stage[j][i] == 3 ) ctx.fillStyle = 'rgb(255, 246, 71)';
-	  ctx.fillRect( i*interval, j*interval, interval, interval);	      
+	  //ctx.fillRect( i*interval, j*interval, interval, interval);	      
         } 
       }
 			    
@@ -65,5 +86,6 @@
   </head>
   <body onload="init()">
     <canvas id="canvas" width="640" height="480"></canvas>
+    <div id="message"></div>
   </body>
 </html>

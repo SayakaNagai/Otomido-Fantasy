@@ -5,14 +5,30 @@
     <title>KeyEvent</title>
     
     <script type="text/javascript">
+      var x = 0;
+      var y = 0;
+      
       document.onkeydown = keydown;
 
       function keydown() {
       target = document.getElementById("message");
-      if(event.keyCode == 38) target.innerHTML = "up";
-      if(event.keyCode == 40) target.innerHTML = "down";
-      if(event.keyCode == 39) target.innerHTML = "right";
-      if(event.keyCode == 37) target.innerHTML = "left";
+      if(event.keyCode == 38){ 
+      y++; 
+      target.innerHTML = y;
+      }
+      if(event.keyCode == 40){ 
+      y--; 
+      target.innerHTML = y;
+      }
+      if(event.keyCode == 39){ 
+      x++; 
+      target.innerHTML = x;
+      }
+      if(event.keyCode == 37){
+      x--;
+      target.innerHTML = x;
+      }
+      
       }
 
     </script>
