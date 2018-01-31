@@ -46,8 +46,8 @@
       [ 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0 ]
       ];
       
-      var nstage_x = 15; //y書き換え
-      var nstage_y = 20; //x書き換え
+      var nstage_x = 20; 
+      var nstage_y = 15; 
       var interval = 32;
       var chara_x = 17;
       var chara_y = 12;
@@ -57,12 +57,12 @@
       function drawStage( ctx, stage ){
       for( var i = 0; i < nstage_y; i++ ){
 	for( var j = 0; j < nstage_x; j++ ){
-          if( stage[j][i] == 0 ) ctx.fillStyle = 'rgb(71, 131, 40)';
-	  else if( stage[j][i] == 1 || stage[j][i] == 4) ctx.fillStyle = 'rgb(154, 76, 44)';
-	  else if( stage[j][i] == 2 ) ctx.fillStyle = 'rgb(0, 76, 44)';
-	  else if( stage[j][i] == 3 ) ctx.fillStyle = 'rgb(255, 246, 71)';
-          else if( stage[j][i] == 4 ) {console.log(stage[j][i]); ctx.fillStyle = 'rgb(0, 0, 0)';}
-	  ctx.fillRect( i*interval, j*interval, interval, interval);
+          if( stage[i][j] == 0 ) ctx.fillStyle = 'rgb(71, 131, 40)';
+	  else if( stage[i][j] == 1 ) ctx.fillStyle = 'rgb(154, 76, 44)';
+	  else if( stage[i][j] == 2 ) ctx.fillStyle = 'rgb(0, 76, 44)';
+	  else if( stage[i][j] == 3 ) ctx.fillStyle = 'rgb(255, 246, 71)';
+          else if( stage[i][j] == 4 ) ctx.fillStyle = 'rgb(128, 128, 128)';
+	  ctx.fillRect( j*interval, i*interval, interval, interval);
         }
       }
       }
@@ -83,11 +83,9 @@
       if(event.keyCode == 38){ //up
       if(stage[chara_y-1][chara_x] == 1 || stage[chara_y-1][chara_x] == 2 ){
       ctx.clearRect( chara_x*interval, chara_y*interval, interval, interval);
-      drawStage(ctx, stage);
       chara_y--; 
       }else if(stage[chara_y-1][chara_x] == 4){
       stage = stage2;
-      drawStage(ctx, stage);
       chara_x = 9;
       chara_y = 14;
       }
@@ -99,24 +97,22 @@
       chara_y++; 
       }else if(stage[chara_y+1][chara_x] == 4 ){
       stage = stage1;
-      drawStage(ctx, stage);
-      chara_y = 1;
+      chara_y = 0;
       }
       }
       if(event.keyCode == 39){ //right
       if(stage[chara_y][chara_x+1] == 1 || stage[chara_y][chara_x+1] == 2 ){
       ctx.clearRect( chara_x*interval, chara_y*interval, interval, interval);
-      drawStage(ctx,stage);
       chara_x++; 
       }
       }
       if(event.keyCode == 37){  //left
       if(stage[chara_y][chara_x-1] != 0){
       ctx.clearRect( chara_x*interval, chara_y*interval, interval, interval);
-      drawStage(ctx,stage);
       chara_x--;
       }
       }
+      drawStage(ctx,stage);
       console.log(chara_x,chara_y);
       ctx.fillStyle = 'rgb(255, 0, 0)';
       ctx.fillRect( chara_x*interval, chara_y*interval, interval, interval);
