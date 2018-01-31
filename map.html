@@ -114,8 +114,11 @@
       }
       drawStage(ctx,stage);
       console.log(chara_x,chara_y);
-      ctx.fillStyle = 'rgb(255, 0, 0)';
-      ctx.fillRect( chara_x*interval, chara_y*interval, interval, interval);
+      //ctx.fillStyle = 'rgb(255, 0, 0)';
+      //ctx.fillRect( chara_x*interval, chara_y*interval, interval, interval);
+      var img = new Image();
+      img.src = "chara_32*32.jpg";
+      ctx.drawImage(img, chara_x*interval, chara_y*interval);
       }
 
       
@@ -124,13 +127,11 @@
       if (canvas.getContext){
       ctx = canvas.getContext('2d');
       drawStage(ctx, stage);
-      ctx.fillStyle = 'rgb(255, 0, 0)';
-      ctx.fillRect( chara_x*interval, chara_y*interval, interval, interval);
-      
+      var img = new Image();
+      img.src = "chara_32*32.jpg";
+      ctx.drawImage(img, chara_x*interval, chara_y*interval);
       }
       }
-
-
 
       function update(){
       canvas.width = canvas.width;  //画面更新の裏技
