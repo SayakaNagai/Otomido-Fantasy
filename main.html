@@ -18,9 +18,9 @@
       [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 ],
       [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 ],
       [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 ],
-      [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 ],
+      [ 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 ],
       [ 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-      [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 ],
+      [ 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 ],
       [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 ],
       [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 ],
       [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 ],
@@ -32,7 +32,7 @@
       [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
       [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 ],
       [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 ],
-      [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 ],
+      [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 ],
       [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 ],
       [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 ],
       [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 ],
@@ -67,23 +67,17 @@
 
       if( stage[1][18] == 3 ){ 
         var img = new Image();
-        img.src = "picture/sprout.jpg";
+        img.src = "sprout.jpg";
         ctx.drawImage(img, 18*interval, 1*interval);
       }
 
       if( stage[1][18] == 5 ){ 
         var img2 = new Image();
-        img2.src = "picture/tree.jpg";
+        img2.src = "tree.jpg";
         ctx.drawImage(img2, 18*interval, 1*interval);
       }
 
-      if( stage[3][9] == 6 ){ 
-        var img3 = new Image();
-        img3.src = "picture/boss.jpg";
-        ctx.drawImage(img3, 9*interval, 3*interval);
       }
-
-      }//end of drawStage
       
       function drawBlack( ctx ){
       for( var i = 0; i < nstage_y; i++ ){
@@ -110,7 +104,8 @@
           chara_y--; 
         }else if(stage[chara_y-1][chara_x] == 4){
           stage = stage2;
-          chara_y = 13;
+          chara_x = 9;
+          chara_y = 14;
         }
       }
       if(event.keyCode == 40){ //down
@@ -121,16 +116,14 @@
         }else if(stage[chara_y+1][chara_x] == 4 ){
           drawBlack(ctx);
           stage = stage1;
-          chara_y = 1;
+          chara_y = 0;
         }
       }
       if(event.keyCode == 39){ //right
-
         if(stage[chara_y][chara_x+1] == 1 || stage[chara_y][chara_x+1] == 2 ){
           ctx.clearRect( chara_x*interval, chara_y*interval, interval, interval);
           chara_x++; 
         }
-
       }
       if(event.keyCode == 37){  //left
         if(stage[chara_y][chara_x-1] != 0){
@@ -142,20 +135,22 @@
       drawStage(ctx,stage);
       console.log(chara_x,chara_y);
       var img = new Image();
-      img.src = "picture/chara_32*32.jpg";
+      img.src = "chara_32*32.jpg";
       ctx.drawImage(img, chara_x*interval, chara_y*interval);
       }
       
       function init(){
       var canvas = document.getElementById('canvas');
-      ctx = canvas.getContext('2d');
-      drawStage(ctx, stage);
-      var img = new Image();
-      img.src = "picture/chara_32*32.jpg";
-      ctx.drawImage(img, chara_x*interval, chara_y*interval);
-      var img2 = new Image();
-      img2.src = "picture/sprout.jpg";
-      ctx.drawImage(img2, 18*interval, 1*interval);
+        if (canvas.getContext){
+          ctx = canvas.getContext('2d');
+          drawStage(ctx, stage);
+          var img = new Image();
+          img.src = "chara_32*32.jpg";
+          ctx.drawImage(img, chara_x*interval, chara_y*interval);
+          var img2 = new Image();
+          img2.src = "sprout.jpg";
+          ctx.drawImage(img2, 18*interval, 1*interval);
+        }
       }
 
       function update(){
