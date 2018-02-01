@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Canvas tutorial template</title>
+    <title>Game</title>
     <script type="text/javascript">
       
       //0: wall
@@ -11,7 +11,7 @@
       //3: treasure
       //4: another stage
       var stage1 = [
-      [ 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0 ],
+      [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
       [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 0 ],
       [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 0 ],
       [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 0 ],
@@ -60,18 +60,30 @@
           if( stage[i][j] == 0 ) ctx.fillStyle = 'rgb(71, 131, 40)';
 	  else if( stage[i][j] == 1 ) ctx.fillStyle = 'rgb(154, 76, 44)';
 	  else if( stage[i][j] == 2 ) ctx.fillStyle = 'rgb(0, 76, 44)';
-	  else if( stage[i][j] == 3 ) ctx.fillStyle = 'rgb(255, 246, 71)';
           else if( stage[i][j] == 4 ) ctx.fillStyle = 'rgb(128, 128, 128)';
 	  ctx.fillRect( j*interval, i*interval, interval, interval);
         }
       }
+
+      if( stage[1][18] == 3 ){ 
+        var img = new Image();
+        img.src = "sprout.jpg";
+        ctx.drawImage(img, 18*interval, 1*interval);
+      }
+
+      if( stage[1][18] == 5 ){ 
+        var img2 = new Image();
+        img2.src = "tree.jpg";
+        ctx.drawImage(img2, 18*interval, 1*interval);
+      }
+
       }
       
       function drawBlack( ctx ){
       for( var i = 0; i < nstage_y; i++ ){
 	for( var j = 0; j < nstage_x; j++ ){
           ctx.fillStyle = 'rgb(0, 0, 0)';
-	  ctx.fillRect( i*interval, j*interval, interval, interval);
+	  ctx.fillRect( j*interval, i*interval, interval, interval);
         }
       }
       }
@@ -79,58 +91,67 @@
       document.onkeydown = keydown;
       
       function keydown() {
-
-      if(event.keyCode == 38){ //up
-      if(stage[chara_y-1][chara_x] == 1 || stage[chara_y-1][chara_x] == 2 ){
-      ctx.clearRect( chara_x*interval, chara_y*interval, interval, interval);
-      chara_y--; 
-      }else if(stage[chara_y-1][chara_x] == 4){
-      stage = stage2;
-      chara_x = 9;
-      chara_y = 14;
+      
+      if(event.keyCode == 13){ //Enter
+        if( stage[chara_y-1][chara_x] == 3 || stage[chara_y][chara_x+1] == 3 ){
+          stage[1][18] = 5;
+          for(var i = 0; i < 4; i++) stage[0][9+i] = 4;  
+        }
       }
+      if(event.keyCode == 38){ //up
+        if(stage[chara_y-1][chara_x] == 1 || stage[chara_y-1][chara_x] == 2 ){
+          ctx.clearRect( chara_x*interval, chara_y*interval, interval, interval);
+          chara_y--; 
+        }else if(stage[chara_y-1][chara_x] == 4){
+	  setInterval(drawBlack(ctx), 1000);
+          stage = stage2;
+          chara_x = 9;
+          chara_y = 14;
+        }
       }
       if(event.keyCode == 40){ //down
-      if(stage[chara_y+1][chara_x] == 1 || stage[chara_y+1][chara_x] == 2 ){
-      ctx.clearRect( chara_x*interval, chara_y*interval, interval, interval);
-      drawStage(ctx,stage);
-      chara_y++; 
-      }else if(stage[chara_y+1][chara_x] == 4 ){
-      stage = stage1;
-      chara_y = 0;
-      }
+        if(stage[chara_y+1][chara_x] == 1 || stage[chara_y+1][chara_x] == 2 ){
+          ctx.clearRect( chara_x*interval, chara_y*interval, interval, interval);
+          drawStage(ctx,stage);
+          chara_y++; 
+        }else if(stage[chara_y+1][chara_x] == 4 ){
+	  setInterval(drawBlack(ctx), 1000);
+          stage = stage1;
+          chara_y = 0;
+        }
       }
       if(event.keyCode == 39){ //right
-      if(stage[chara_y][chara_x+1] == 1 || stage[chara_y][chara_x+1] == 2 ){
-      ctx.clearRect( chara_x*interval, chara_y*interval, interval, interval);
-      chara_x++; 
-      }
+        if(stage[chara_y][chara_x+1] == 1 || stage[chara_y][chara_x+1] == 2 ){
+          ctx.clearRect( chara_x*interval, chara_y*interval, interval, interval);
+          chara_x++; 
+        }
       }
       if(event.keyCode == 37){  //left
-      if(stage[chara_y][chara_x-1] != 0){
-      ctx.clearRect( chara_x*interval, chara_y*interval, interval, interval);
-      chara_x--;
+        if(stage[chara_y][chara_x-1] != 0){
+          ctx.clearRect( chara_x*interval, chara_y*interval, interval, interval);
+          chara_x--;
+        }
       }
-      }
+
       drawStage(ctx,stage);
       console.log(chara_x,chara_y);
-      //ctx.fillStyle = 'rgb(255, 0, 0)';
-      //ctx.fillRect( chara_x*interval, chara_y*interval, interval, interval);
       var img = new Image();
       img.src = "chara_32*32.jpg";
       ctx.drawImage(img, chara_x*interval, chara_y*interval);
       }
-
       
       function init(){
       var canvas = document.getElementById('canvas');
-      if (canvas.getContext){
-      ctx = canvas.getContext('2d');
-      drawStage(ctx, stage);
-      var img = new Image();
-      img.src = "chara_32*32.jpg";
-      ctx.drawImage(img, chara_x*interval, chara_y*interval);
-      }
+        if (canvas.getContext){
+          ctx = canvas.getContext('2d');
+          drawStage(ctx, stage);
+          var img = new Image();
+          img.src = "chara_32*32.jpg";
+          ctx.drawImage(img, chara_x*interval, chara_y*interval);
+          var img2 = new Image();
+          img2.src = "sprout.jpg";
+          ctx.drawImage(img2, 18*interval, 1*interval);
+        }
       }
 
       function update(){
