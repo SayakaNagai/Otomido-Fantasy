@@ -36,8 +36,14 @@
       ctx.fillText("Player", 3*interval, 9*interval);
       ctx.fillText("Enermy", 13*interval, 9*interval);
       ctx.fillStyle = "white";
-      ctx.fillText("HP      "+chara_data.hp, 3*interval, 11*interval);
-      ctx.fillText("HP      "+enermy_data.hp, 13*interval, 11*interval);
+      ctx.font = "22px 'ＭＳ Ｐゴシック'";
+      ctx.fillText("HP      "+ chara_data.hp, 3*interval, 11*interval);
+      ctx.fillText("HP      "+ enermy_data.hp, 13*interval, 11*interval);
+ 　　　ctx.fillText("スキル", 3*interval, 12*interval);
+      for( var i = 0; i < chara_data.skill; i++ ){
+        ctx.fillStyle = 'rgb(80, 173, 137)';
+        ctx.fillRect( (5+i)*interval+10, 11*interval+10, 22, 22);
+      }
       }	      
 
       document.onkeydown = keydown;
@@ -73,7 +79,7 @@
         img2.src = "picture/boss.jpg";
         ctx.drawImage(img2, 12*interval, 3*interval);
 
-        var chara_data= new charaData(50, 10, 1);
+        var chara_data= new charaData(50, 10, 3);
         var enermy_data = new enermyData(100,8);
 
         drawData( ctx, chara_data, enermy_data );
