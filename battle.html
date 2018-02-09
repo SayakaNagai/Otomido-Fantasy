@@ -8,6 +8,9 @@
       var nstage_x = 20; 
       var nstage_y = 15; 
       var interval = 32;
+      var button = 0; //0:fight 1:earn skill 2:recover 3:use skill
+      var chara_data;
+      var enermy_data;
 
       function charaData(hp, power, skill){
         this.hp = hp;
@@ -30,47 +33,64 @@
         }
       }
 
-      function drawData( ctx, chara_data, enermy_data){
-      ctx.font = "26px 'ＭＳ Ｐゴシック'";
-      ctx.fillStyle = "yellow";
-      ctx.fillText("Player", 3*interval, 9*interval);
-      ctx.fillText("Enermy", 13*interval, 9*interval);
-      ctx.fillStyle = "white";
-      ctx.font = "22px 'ＭＳ Ｐゴシック'";
-      ctx.fillText("HP      "+ chara_data.hp, 3*interval, 11*interval);
-      ctx.fillText("HP      "+ enermy_data.hp, 13*interval, 11*interval);
- 　　　ctx.fillText("スキル", 3*interval, 12*interval);
-      for( var i = 0; i < chara_data.skill; i++ ){
-        ctx.fillStyle = 'rgb(80, 173, 137)';
-        ctx.fillRect( (5+i)*interval+10, 11*interval+10, 22, 22);
-      }
+      function drawData( ctx ){
+        drawStage(ctx);
+        ctx.font = "26px 'ＭＳ Ｐゴシック'";
+        ctx.fillStyle = "yellow";
+        ctx.fillText("Player", 8*interval, 9*interval);
+        ctx.fillText("Enermy", 14*interval, 9*interval);
+        ctx.fillStyle = "white";
+        ctx.font = "22px 'ＭＳ Ｐゴシック'";
+        ctx.fillText("攻撃", 3*interval, 9*interval);
+        ctx.fillText("回復", 3*interval, 10*interval);
+        ctx.fillText("ためる", 3*interval, 11*interval);
+        ctx.fillText("スキル", 3*interval, 12*interval);
+        ctx.fillText("HP      "+ chara_data.hp, 8*interval, 11*interval);
+        ctx.fillText("HP      "+ enermy_data.hp, 14*interval, 11*interval);
+ 　　  　ctx.fillText("スキル", 8*interval, 12*interval);
+
+        ctx.fillStyle = 'rgb(255, 255, 255)';
+        ctx.fillRect( 2*interval, (8+button)*interval+16, 16, 16);
+        
+        for( var i = 0; i < chara_data.skill; i++ ){
+          ctx.fillStyle = 'rgb(80, 173, 137)';
+          ctx.fillRect( (10+i)*interval+10, 11*interval+10, 22, 22);
+        }
       }	      
 
       document.onkeydown = keydown;
       
       function keydown() {
       
-        if(event.keyCode == 13){ //Enter
-        
-        }
         if(event.keyCode == 38){ //up
-        
+          if( button == 0 ){ button = 3; }
+          else{ button--; }
         }
-        if(event.keyCode == 40){ //down
-        
+        else if(event.keyCode == 40){ //down
+          if( button == 3 ){ button = 0;}
+          else{ button++; }
         }
-        if(event.keyCode == 39){ //right
-                
+        else if(event.keyCode == 13){ //Enter
+          if( button == 0 ) {
+            enermy_data.hp -= chara_data.power;
+          }else if( button == 1 ){
+            chara_data.hp += 30; 
+          }else if( button == 2 ){
+            chara_data.skill++;
+            console.log(chara_data.skill);
+          }else if( button == 3 ){
+            if( chara_data.skill == 3 ){ 
+              enermy_data.hp -= 40;
+              chara_data.skill -= 3;
+            }
+          }
         }
-        if(event.keyCode == 37){  //left
-       
-        }
+        drawData( ctx );
       }
       
       function init(){
         var canvas = document.getElementById('canvas');
         ctx = canvas.getContext('2d');
-        drawStage(ctx);
 
         var img = new Image();
         img.src = "picture/chara_32*32.jpg";
@@ -79,10 +99,10 @@
         img2.src = "picture/boss.jpg";
         ctx.drawImage(img2, 12*interval, 3*interval);
 
-        var chara_data= new charaData(50, 10, 3);
-        var enermy_data = new enermyData(100,8);
+        chara_data= new charaData(50, 10, 1);
+        enermy_data = new enermyData(100,8);
 
-        drawData( ctx, chara_data, enermy_data );
+        drawData( ctx );
       }
 
     </script>
