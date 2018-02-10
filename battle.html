@@ -12,20 +12,24 @@
       var chara_data;
       var enermy_data;
 
-      function charaData(hp, power, skill){
+      function charaData(hp, power, skill, x, y ){
         this.hp = hp;
         this.power = power;
-        this .skill = skill;
+        this.skill = skill;
+        this.x = x;
+        this.y = y;
       }
 
-      function enermyData(hp, power){
+      function enermyData(hp, power, x, y ){
         this.hp = hp;
         this.power = power;
+        this.x = x;
+        this.y = y;
       }
 
 
       function drawStage( ctx ){
-        for( var i = nstage_y*0.5; i < nstage_y; i++ ){
+        for( var i = 0; i < nstage_y; i++ ){
 	  for( var j = 0; j < nstage_x; j++ ){
             ctx.fillStyle = 'rgb(0, 0, 0)';
 	    ctx.fillRect( j*interval, i*interval, interval, interval);
@@ -35,6 +39,14 @@
 
       function drawData( ctx ){
         drawStage(ctx);
+
+        var img = new Image();
+        img.src = "picture/chara_32*32.jpg";
+        ctx.drawImage(img, chara_data.x*interval, chara_data.y*interval);
+        var img2 = new Image();
+        img2.src = "picture/boss.jpg";
+        ctx.drawImage(img2, enermy_data.x*interval, enermy_data.y*interval);
+
         ctx.font = "26px 'ＭＳ Ｐゴシック'";
         ctx.fillStyle = "yellow";
         ctx.fillText("Player", 8*interval, 9*interval);
@@ -61,7 +73,7 @@
       document.onkeydown = keydown;
       
       function keydown() {
-      
+      if( chara_data.hp > 0 && enermy_data.hp > 0 ){
         if(event.keyCode == 38){ //up
           if( button == 0 ){ button = 3; }
           else{ button--; }
@@ -72,20 +84,42 @@
         }
         else if(event.keyCode == 13){ //Enter
           if( button == 0 ) {
+            moveImage( chara_data, 1, 0, ctx );
+            var moveChara = function(){
+              moveImage( chara_data, -1, 0, ctx );
+	    } 
+	    setTimeout(moveChara, 500);
             enermy_data.hp -= chara_data.power;
           }else if( button == 1 ){
             chara_data.hp += 30; 
           }else if( button == 2 ){
             chara_data.skill++;
-            console.log(chara_data.skill);
           }else if( button == 3 ){
             if( chara_data.skill == 3 ){ 
+              moveImage( chara_data, 1, 0, ctx );
+              var moveChara = function(){
+                moveImage( chara_data, -1, 0, ctx );
+	      } 
+	    setTimeout(moveChara, 500);
               enermy_data.hp -= 40;
               chara_data.skill -= 3;
             }
           }
-          chara_data.hp -= enermy_data.power;
+        //1s chien
+        moveImage( enermy_data, -1, 0, ctx );
+        var moveEnermy = function(){
+        moveImage( enermy_data, 1, 0, ctx );
+	  } 
+        setTimeout(moveEnermy, 500);
+        chara_data.hp -= enermy_data.power;
         }
+        drawData( ctx );
+      }
+      }
+
+      function moveImage( data, x, y, ctx ){
+        data.x += x;
+        data.y += y;
         drawData( ctx );
       }
       
@@ -100,8 +134,8 @@
         img2.src = "picture/boss.jpg";
         ctx.drawImage(img2, 12*interval, 3*interval);
 
-        chara_data= new charaData(50, 10, 1);
-        enermy_data = new enermyData(100,8);
+        chara_data= new charaData(50, 8, 1, 6, 4);
+        enermy_data = new enermyData(100,10, 12, 3);
 
         drawData( ctx );
       }
