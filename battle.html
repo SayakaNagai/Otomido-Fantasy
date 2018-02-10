@@ -68,6 +68,12 @@
           ctx.fillStyle = 'rgb(80, 173, 137)';
           ctx.fillRect( (10+i)*interval+10, 11*interval+10, 22, 22);
         }
+
+        if(button == 1){
+          ctx.font = "22px 'ＭＳ Ｐゴシック'";
+          ctx.fillStyle = "yellow";
+          ctx.fillText("+30", 11*interval, 11*interval);
+        }
       }	      
 
       document.onkeydown = keydown;
@@ -90,7 +96,7 @@
 	    } , 500);
             enermy_data.hp -= chara_data.power;
           }else if( button == 1 ){
-            chara_data.hp += 30; 
+            chara_data.hp += 30;            
           }else if( button == 2 ){
             chara_data.skill++;
           }else if( button == 3 ){
@@ -103,15 +109,17 @@
               chara_data.skill -= 3;
             }
           }
-        //1s chien
-        moveImage( enermy_data, -1, 0, ctx );
-        var moveEnermy = function(){
-        moveImage( enermy_data, 1, 0, ctx );
-	  } 
-        chara_data.hp -= enermy_data.power;
-        setTimeout(moveEnermy, 500);
+        //enermy attack
+        setTimeout(function(){
+          moveImage( enermy_data, -1, 0, ctx );
+          chara_data.hp -= enermy_data.power;
+	 } , 2000);
+        setTimeout(function(){
+          moveImage( enermy_data, 1, 0, ctx );
+	} , 2500);
         
-        }
+        }//Enter
+        drawData(ctx);
       }
       }
 
