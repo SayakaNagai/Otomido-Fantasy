@@ -85,10 +85,9 @@
         else if(event.keyCode == 13){ //Enter
           if( button == 0 ) {
             moveImage( chara_data, 1, 0, ctx );
-            var moveChara = function(){
+	    setTimeout(function(){
               moveImage( chara_data, -1, 0, ctx );
-	    } 
-	    setTimeout(moveChara, 500);
+	    } , 500);
             enermy_data.hp -= chara_data.power;
           }else if( button == 1 ){
             chara_data.hp += 30; 
@@ -97,10 +96,9 @@
           }else if( button == 3 ){
             if( chara_data.skill == 3 ){ 
               moveImage( chara_data, 1, 0, ctx );
-              var moveChara = function(){
+	      setTimeout(function(){
                 moveImage( chara_data, -1, 0, ctx );
-	      } 
-	    setTimeout(moveChara, 500);
+	      } , 500);
               enermy_data.hp -= 40;
               chara_data.skill -= 3;
             }
@@ -110,10 +108,10 @@
         var moveEnermy = function(){
         moveImage( enermy_data, 1, 0, ctx );
 	  } 
-        setTimeout(moveEnermy, 500);
         chara_data.hp -= enermy_data.power;
+        setTimeout(moveEnermy, 500);
+        
         }
-        drawData( ctx );
       }
       }
 
