@@ -37,7 +37,7 @@
       [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 ],
       [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 ],
       [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 ],
-      [ 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0 ],
+      [ 0, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 0 ],
       [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 ],
       [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 ],
       [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 ],
@@ -46,13 +46,16 @@
       [ 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0 ]
       ];
       
+      //init
       var nstage_x = 20; 
       var nstage_y = 15; 
       var interval = 32;
       var chara_x = 17;
       var chara_y = 12;
       var stage = stage1;
-
+      var battle_flag = 1;
+      
+      //draw stage
       function drawStage( ctx, stage ){
       for( var i = 0; i < nstage_y; i++ ){
 	for( var j = 0; j < nstage_x; j++ ){
@@ -60,22 +63,26 @@
 	  else if( stage[i][j] == 1 ) ctx.fillStyle = 'rgb(154, 76, 44)';
 	  else if( stage[i][j] == 2 ) ctx.fillStyle = 'rgb(0, 76, 44)';
           else if( stage[i][j] == 4 ) ctx.fillStyle = 'rgb(128, 128, 128)';
+	  else if( stage[i][j] == 7 ) ctx.fillStyle = 'rgb(255, 0, 0)';
 	  ctx.fillRect( j*interval, i*interval, interval, interval);
         }
       }
-
+    
+      //sprout image
       if( stage[1][18] == 3 ){ 
         var img = new Image();
         img.src = "picture/sprout.jpg";
         ctx.drawImage(img, 18*interval, 1*interval);
       }
-
+			    
+      //sprout->tree image
       if( stage[1][18] == 5 ){ 
         var img2 = new Image();
         img2.src = "picture/tree.jpg";
         ctx.drawImage(img2, 18*interval, 1*interval);
       }
 
+      //boss image
       if( stage[3][9] == 6 ){ 
         var img3 = new Image();
         img3.src = "picture/boss.jpg";
@@ -84,6 +91,7 @@
 
       }//end of drawStage
       
+      //draw black stage
       function drawBlack( ctx ){
       for( var i = 0; i < nstage_y; i++ ){
 	for( var j = 0; j < nstage_x; j++ ){
@@ -93,9 +101,13 @@
       }
       }
 
+//---------------------------end of functions----------------------------
+
+//---------------------------key operation-----------------------------
       document.onkeydown = keydown;
       
       function keydown() {
+      
       
       if(event.keyCode == 13){ //Enter
         if( stage[chara_y-1][chara_x] == 3 || stage[chara_y][chara_x+1] == 3 ){
@@ -110,6 +122,8 @@
         }else if(stage[chara_y-1][chara_x] == 4){
           stage = stage2;
           chara_y = 13;
+        }else if(stage[chara_y-1][chara_x] == 7){
+          battle_flag = 2;
         }
       }
       if(event.keyCode == 40){ //down
@@ -118,7 +132,7 @@
           drawStage(ctx,stage);
           chara_y++; 
         }else if(stage[chara_y+1][chara_x] == 4 ){
-          drawBlack(ctx);
+          adrawBlack(ctx);
           stage = stage1;
           chara_y = 1;
         }
@@ -138,13 +152,16 @@
         }
       }
 
-      drawStage(ctx,stage);
+      drawStage(ctx,stage); //draw stage 
       console.log(chara_x,chara_y);
       var img = new Image();
       img.src = "picture/chara_32*32.jpg";
       ctx.drawImage(img, chara_x*interval, chara_y*interval);
-      }
       
+      }//end of keydown()
+   
+//-----------------------end of key operation-----------------------------  
+
       function init(){
       var canvas = document.getElementById('canvas');
       ctx = canvas.getContext('2d');
@@ -156,8 +173,7 @@
       img2.src = "picture/sprout.jpg";
       ctx.drawImage(img2, 18*interval, 1*interval);
       }
-
-      
+  
     </script>
     <style type="text/css">
       canvas { border: 1px solid #000; }
